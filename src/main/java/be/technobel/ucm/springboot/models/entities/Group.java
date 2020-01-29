@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,13 +25,19 @@ public class Group implements Serializable {
     @Column
     private String label;
 
+    @ManyToMany(targetEntity = Role.class)
+    private Set<Role> roles;
+
     public Group() {
+        this.roles = new HashSet<Role>();
     }
     public Group(long id, String label) {
+        this();
         this.id = id;
         this.label = label;
     }
     public Group(String label) {
+        this();
         this.label = label;
     }
 }

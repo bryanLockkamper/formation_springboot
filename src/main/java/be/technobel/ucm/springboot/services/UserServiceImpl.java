@@ -1,7 +1,6 @@
 package be.technobel.ucm.springboot.services;
 
 import be.technobel.ucm.springboot.models.entities.User;
-import be.technobel.ucm.springboot.models.entities.UserType;
 import be.technobel.ucm.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,12 +33,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(String username, String password, UserType... userType) {
+    public User save(String username, String password) {
         return null;
     }
 
     @Override
-    public List<User> findByUserTypeListContaining(UserType type) {
-        return this.repository.findByUserTypeListContaining(type);
+    public User findById(long id) {
+        return this.repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return (List<User>) this.repository.findAll();
     }
 }

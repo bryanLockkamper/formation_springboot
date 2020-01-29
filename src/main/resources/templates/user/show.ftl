@@ -1,4 +1,4 @@
 <#include "../layout.ftl">
 <@main>
-    <div>Hello world !</div>
+    <h1>Show User</h1>
 </@main>

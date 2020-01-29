@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,15 +29,22 @@ public class User {
     @Column(length = 50)
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass= UserType.class)
-    private Set<UserType> userTypeList;
-
     @ManyToMany(targetEntity = Group.class)
     private Set<Group> groups;
 
+    @OneToMany(targetEntity = UserRole.class, mappedBy = "user")
+    private Set<UserRole> userRoles;
+
     public User() {
-        this.userTypeList = new HashSet<UserType>();
         this.groups = new HashSet<Group>();
+    }
+
+    public Set<Role> getRoles() {
+        Set<Role> roles = new HashSet<>();
+
+        this.groups.forEach(group -> roles.addAll(group.getRoles()));
+        this.userRoles.forEach(userRole -> roles.add(userRole.getRole()));
+
+        return roles;
     }
 }
